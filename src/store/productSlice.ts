@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IProduct, IProductFilter } from "@/types/productTypes";
+import { loadProducts } from "@/services/productsService";
 
 export enum EProductSlice {
   NAME= 'product',
@@ -35,6 +36,20 @@ const productSlice = createSlice({
     setFilters(state: IProductState, action: PayloadAction<IProductFilter[]>) {
       state.filters = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadProducts.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.products = action.payload;
+        }
+      })
+      .addCase(loadProducts.rejected, (state) => {
+        state.isError = true;
+      })
+      .addCase(loadProducts.pending, (state) => {
+        state.isLoading = true;
+      });
   },
 });
 

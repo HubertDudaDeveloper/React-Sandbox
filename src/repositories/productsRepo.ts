@@ -1,6 +1,6 @@
 import { EDummyJSON, IProduct } from "../types/productTypes";
 
-export const loadProducts = async (): Promise<IProduct[]> => {
+export const loadProducts = async (): Promise<Record<string, IProduct[]>> => {
 
   const res = await fetch(`${EDummyJSON.URL}${EDummyJSON.PRODUCTS}`);
 
@@ -10,5 +10,5 @@ export const loadProducts = async (): Promise<IProduct[]> => {
 
   const data = await res.json();
 
-  return data as IProduct[];
+  return data as Record<string, IProduct[]>;
 };
