@@ -10,3 +10,24 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+Konwencje:
+
+- BEM
+-
+
+Kolejność w komponencie:
+
+1️⃣ Typy (jeśli są potrzebne → interface/typ propsów)
+
+2️⃣ Hooki z biblioteki (useState, useSelector, useContext itd)
+
+3️⃣ Własne Hooki (useTheme, useAppSelector itd)
+
+4️⃣ useMemo / useCallback (obliczenia / memoizacje / callbacki)
+
+5️⃣ useEffect / useLayoutEffect (efekty uboczne → side effects)
+
+6️⃣ Metody lokalne (handleX → wszystkie eventy i logika)
+
+7️⃣ JSX → return (UI)

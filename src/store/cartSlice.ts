@@ -33,11 +33,10 @@ const cartSlice = createSlice({
 
       if (isProductAlreadyInCart) {
         state.items[indexOfFoundProduct].quantity = state.items[indexOfFoundProduct].quantity + 1; 
-        state.items = [...state.items];
         return;
       }
 
-      state.items = [...state.items, action.payload];
+      state.items.push(action.payload);
     },
     loadCartItems(state: ICartState, action: PayloadAction<ICartProduct[]>): void {
       state.items = action.payload;
@@ -52,7 +51,6 @@ const cartSlice = createSlice({
       }
 
       fCartProduct.quantity = action.payload.quantity;
-      state.items = [...state.items];
     },
   }
 })

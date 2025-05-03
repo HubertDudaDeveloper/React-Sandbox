@@ -1,5 +1,4 @@
 import { setIsLoading, setIsError } from "@/store/productSlice";
-import { store } from "@/store/store";
 import { loadProducts as loadProductsRepo } from "@/repositories/productsRepo";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

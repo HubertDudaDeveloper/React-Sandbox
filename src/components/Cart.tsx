@@ -28,6 +28,10 @@ export const Cart = () => {
   useEffect(() => loadSavedCart(dispatch), []);
   useEffect(() => saveCart(cartList), [cartList]);
 
+  const handleGoToForm = () => {
+    
+  };
+
   const price = useMemo(
     () =>
       cartList.length
@@ -69,6 +73,8 @@ export const Cart = () => {
       ))}
 
       <span>Razem: {price}zł</span>
+
+      <button onClick={handleGoToForm}>Przejdź do zamówienia</button>
     </div>
   );
 };

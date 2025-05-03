@@ -1,7 +1,4 @@
 import '@/styles/App.scss';
-import ToDo from '@/components/ToDo';
-import ToDoAdvanced from '@/components/ToDoAdvanced';
-import Counter from '@/components/Counter';
 import Cart from '@/components/Cart';
 import ProductList from '@/components/ProductList';
 import { useTheme } from '@/hooks/ThemeHook';
