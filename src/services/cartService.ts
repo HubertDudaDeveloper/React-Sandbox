@@ -1,17 +1,44 @@
-import { useAppDispatch } from "@/hooks/reduxHooks";
 import { IProduct } from "@/types/productTypes";
-import { ICartProduct, addCartItems, removeCartItems } from "@/store/cartSlice";
+import { addCartItem, loadCartItems, removeCartItems, quantityChange } from "@/store/cartSlice";
 import { AppDispatch } from "@/store/store";
+import { ICartProduct } from "@/types/cartTypes";
 
 const cartService = {
-  handleAddProductToCart(dispatch: AppDispatch, product: IProduct, quantity: number): void {
+  addProductToCart(dispatch: AppDispatch, product: IProduct, quantity: number): void {
     const cartItem = { ...product, quantity } as ICartProduct;
-    dispatch(addCartItems(cartItem));
+    dispatch(addCartItem(cartItem));
   },
 
-  handleRemoveProductToCart(dispatch: AppDispatch, product: IProduct): void {
-    dispatch(removeCartItems(product.id));
+  removeProductToCart(dispatch: AppDispatch, productId: number): void {
+    dispatch(removeCartItems(productId));
+  },
+
+  changeQuantity(dispatch: AppDispatch, productId: number, quantity: number | string): void {
+    if (Number(quantity) <= 0) {
+      return;
+    }
+
+    dispatch(quantityChange({id: productId, quantity: Number(quantity)}));
+  },
+
+  saveCart(cartItems: ICartProduct[]): void {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  },
+
+  loadSavedCart(dispatch: AppDispatch): void {
+    const cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems') ?? '') : [];
+    if (!cartItems.length) {
+      return;
+    };
+
+    dispatch(loadCartItems(cartItems));
   },
 };
 
-export const { handleAddProductToCart, handleRemoveProductToCart } = cartService;
+export const {
+  addProductToCart,
+  removeProductToCart,
+  changeQuantity,
+  loadSavedCart,
+  saveCart
+} = cartService;

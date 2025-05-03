@@ -1,13 +1,9 @@
-import { IProduct } from "@/types/productTypes";
+import { ICartProduct } from "@/types/cartTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum ECartSlice {
   NAME = 'cart'
 };
-
-export interface ICartProduct extends IProduct {
-  quantity: number
-}
 
 interface ICartState {
   isLoading: boolean,
@@ -31,14 +27,35 @@ const cartSlice = createSlice({
     setIsError(state: ICartState, action: PayloadAction<boolean>): void {
       state.isError = action.payload;
     },
-    addCartItems(state: ICartState, action: PayloadAction<ICartProduct>): void {
+    addCartItem(state: ICartState, action: PayloadAction<ICartProduct>): void {
+      const indexOfFoundProduct = state.items.findIndex((cartProduct: ICartProduct) => cartProduct.id === action.payload.id);
+      const isProductAlreadyInCart = indexOfFoundProduct !== -1;
+
+      if (isProductAlreadyInCart) {
+        state.items[indexOfFoundProduct].quantity = state.items[indexOfFoundProduct].quantity + 1; 
+        state.items = [...state.items];
+        return;
+      }
+
       state.items = [...state.items, action.payload];
+    },
+    loadCartItems(state: ICartState, action: PayloadAction<ICartProduct[]>): void {
+      state.items = action.payload;
     },
     removeCartItems(state: ICartState, action: PayloadAction<number>): void {
       state.items = state.items.filter((cartProduct: ICartProduct) => cartProduct.id !== action.payload);
     },
+    quantityChange(state: ICartState, action: PayloadAction<Record<string, number>>): void {
+      const fCartProduct = state.items.find((cartProduct: ICartProduct) => cartProduct.id === action.payload.id);
+      if (!fCartProduct) {
+        return;
+      }
+
+      fCartProduct.quantity = action.payload.quantity;
+      state.items = [...state.items];
+    },
   }
 })
 
-export const { setIsLoading, setIsError , addCartItems, removeCartItems } = cartSlice.actions;
+export const { setIsLoading, setIsError , addCartItem, loadCartItems, removeCartItems, quantityChange } = cartSlice.actions;
 export default cartSlice.reducer;

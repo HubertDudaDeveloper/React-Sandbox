@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
 import { loadProducts } from "@/services/productsService";
-import { store } from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { IProduct } from "@/types/productTypes";
 import ProductItem from "@/components/ProductItem";
-import { handleAddProductToCart } from "@/services/cartService";
+import { addProductToCart, saveCart } from "@/services/cartService";
+import { EProductSlice } from "@/store/productSlice";
+import { ECartSlice } from "@/store/cartSlice";
+import { IProduct } from "@/types/productTypes";
 
 const ProductList = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -13,16 +14,16 @@ const ProductList = (): ReactElement => {
     dispatch(loadProducts());
   }, [dispatch]);
 
-  const isLoading = useAppSelector((state) => state.products.isLoading);
-  const isError = useAppSelector((state) => state.products.isError);
+  const { isLoading, isError, products } = useAppSelector((store) => store[EProductSlice.NAME]);
+  const { items: cartList } = useAppSelector((store) => store[ECartSlice.NAME]);
 
-  const products = useAppSelector((state) => state.products.products);
   const [filterTitle, setFilterTitle] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
 
-  const handleAddToCart = (product: IProduct, quantity: number) => {
-    handleAddProductToCart(dispatch, product, quantity);
-  };
+  const handleAddProductToCart = (product: IProduct): void => {
+    addProductToCart(dispatch, product, 1);
+    saveCart(cartList);
+  }
 
   if (isLoading) {
     return <>Trwa ładowanie...</>;
@@ -78,7 +79,7 @@ const ProductList = (): ReactElement => {
           <ProductItem
             key={product.id}
             product={product}
-            onAddToCart={() => handleAddToCart(product, 1)}
+            onAddToCart={() => handleAddProductToCart(product)}
           />
         ))}
     </div>
