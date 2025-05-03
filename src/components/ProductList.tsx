@@ -2,6 +2,9 @@ import { ReactElement, useEffect, useState } from "react";
 import { loadProducts } from "@/services/productsService";
 import { store } from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { IProduct } from "@/types/productTypes";
+import ProductItem from "@/components/ProductItem";
+import { handleAddProductToCart } from "@/services/cartService";
 
 const ProductList = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -10,27 +13,23 @@ const ProductList = (): ReactElement => {
     dispatch(loadProducts());
   }, [dispatch]);
 
-  const products = useAppSelector((state) => state.products.products);
   const isLoading = useAppSelector((state) => state.products.isLoading);
   const isError = useAppSelector((state) => state.products.isError);
 
+  const products = useAppSelector((state) => state.products.products);
   const [filterTitle, setFilterTitle] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
 
+  const handleAddToCart = (product: IProduct, quantity: number) => {
+    handleAddProductToCart(dispatch, product, quantity);
+  };
+
   if (isLoading) {
-    return (
-      <>
-        Trwa ładowanie...
-      </>
-    )
+    return <>Trwa ładowanie...</>;
   }
 
   if (isError) {
-    return (
-      <>
-        Wystąpił błąd...
-      </>
-    )
+    return <>Wystąpił błąd...</>;
   }
 
   return (
@@ -44,12 +43,22 @@ const ProductList = (): ReactElement => {
       />
 
       <label htmlFor="category-filter">Kategoria</label>
-      <input
+
+      <select
         id="category-filter"
         value={filterCategory}
-        placeholder="tytuł"
         onChange={(e) => setFilterCategory(e.target?.value)}
-      />
+      >
+        {["", ...new Set(products.map((product) => product.category))].map(
+          (category, index) => {
+            return (
+              <option key={category + index} value={category}>
+                {category}
+              </option>
+            );
+          }
+        )}
+      </select>
 
       {products
         .filter((product) => {
@@ -57,15 +66,20 @@ const ProductList = (): ReactElement => {
             return true;
           }
 
-          return ((filterTitle && product.title === filterTitle) || (filterCategory && product.category === filterCategory));
+          return (
+            (filterTitle &&
+              product.title
+                .toLowerCase()
+                .includes(filterTitle.toLowerCase())) ||
+            (filterCategory && product.category === filterCategory)
+          );
         })
         .map((product) => (
-          <div key={product.id}>
-            <h2>{product.title}</h2>
-            <img src={product.images[0]} height="250"/>
-            <p>{product.description}</p>
-            <span>{product.price}</span>
-          </div>
+          <ProductItem
+            key={product.id}
+            product={product}
+            onAddToCart={() => handleAddToCart(product, 1)}
+          />
         ))}
     </div>
   );

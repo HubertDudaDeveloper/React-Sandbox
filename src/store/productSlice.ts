@@ -24,16 +24,16 @@ const productSlice = createSlice({
   name: EProductSlice.NAME,
   initialState,
   reducers: {
-    setIsLoading(state: IProductState, action: PayloadAction<boolean>) {
+    setIsLoading(state: IProductState, action: PayloadAction<boolean>): void {
       state.isLoading = action.payload;
     },
-    setIsError(state: IProductState, action: PayloadAction<boolean>) {
+    setIsError(state: IProductState, action: PayloadAction<boolean>): void {
       state.isError = action.payload;
     },
-    setProducts(state: IProductState, action: PayloadAction<IProduct[]>) {
+    setProducts(state: IProductState, action: PayloadAction<IProduct[]>): void {
       state.products = action.payload;
     },
-    setFilters(state: IProductState, action: PayloadAction<IProductFilter[]>) {
+    setFilters(state: IProductState, action: PayloadAction<IProductFilter[]>): void {
       state.filters = action.payload;
     }
   },
