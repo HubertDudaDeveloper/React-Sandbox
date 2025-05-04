@@ -1,5 +1,5 @@
-import { ETheme } from "@/types/themeTypes";
-import { createContext, ReactNode, useContext, useState } from "react";
+import { ETheme } from "@/features/Theme/types/themeTypes";
+import { createContext } from "react";
 
 const ThemeContext = createContext<{
   theme: ETheme;

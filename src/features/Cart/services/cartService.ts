@@ -1,7 +1,7 @@
-import { IProduct } from "@/types/productTypes";
-import { addCartItem, loadCartItems, removeCartItems, quantityChange } from "@/store/cartSlice";
+import { IProduct } from "@/features/Products/types/productTypes";
 import { AppDispatch } from "@/store/store";
-import { ICartProduct } from "@/types/cartTypes";
+import { addCartItem, removeCartItems, quantityChange, loadCartItems } from "@/features/Cart/store/cartSlice";
+import { ICartProduct } from "@/features/Cart/types/cartTypes";
 
 const cartService = {
   addProductToCart(dispatch: AppDispatch, product: IProduct, quantity: number): void {

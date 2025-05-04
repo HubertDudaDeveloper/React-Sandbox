@@ -1,15 +1,19 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { ECartSlice } from "@/store/cartSlice";
+import { ECartSlice } from "@/features/Cart/store/cartSlice";
 import {
   changeQuantity,
   removeProductToCart,
   saveCart,
   loadSavedCart,
-} from "@/services/cartService";
+} from "@/features/Cart/services/cartService";
 import { useEffect, useMemo } from "react";
-import { ICartProduct } from "@/types/cartTypes";
+import { ICartProduct } from "@/features/Cart/types/cartTypes";
 
-export const Cart = () => {
+type CartProps = {
+  onGoToCheckout: Function
+};
+
+export const Cart = ({onGoToCheckout}: CartProps) => {
   const dispatch = useAppDispatch();
   const {
     isError,
@@ -29,7 +33,7 @@ export const Cart = () => {
   useEffect(() => saveCart(cartList), [cartList]);
 
   const handleGoToForm = () => {
-    
+    onGoToCheckout();
   };
 
   const price = useMemo(

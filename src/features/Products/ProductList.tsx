@@ -1,11 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
-import { loadProducts } from "@/services/productsService";
+import { loadProducts } from "@/features/Products/services/productsService";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import ProductItem from "@/components/ProductItem";
-import { addProductToCart, saveCart } from "@/services/cartService";
-import { EProductSlice } from "@/store/productSlice";
-import { ECartSlice } from "@/store/cartSlice";
-import { IProduct } from "@/types/productTypes";
+import ProductItem from "@/features/Products/components/ProductItem";
+import { addProductToCart, saveCart } from "@/features/Cart/services/cartService";
+import { EProductSlice } from "@/features/Products/store/productSlice";
+import { ECartSlice } from "@/features/Cart/store/cartSlice";
+import { IProduct } from "@/features/Products/types/productTypes";
 
 const ProductList = (): ReactElement => {
   const dispatch = useAppDispatch();

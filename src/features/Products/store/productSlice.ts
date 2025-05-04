@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct, IProductFilter } from "@/types/productTypes";
-import { loadProducts } from "@/services/productsService";
+import { IProduct, IProductFilter } from "@/features/Products/types/productTypes";
+import { loadProducts } from "@/features/Products/services/productsService";
 
 export enum EProductSlice {
   NAME= 'product',

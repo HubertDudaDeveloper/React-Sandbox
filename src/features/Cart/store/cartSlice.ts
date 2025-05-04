@@ -1,4 +1,4 @@
-import { ICartProduct } from "@/types/cartTypes";
+import { ICartProduct } from "@/features/Cart/types/cartTypes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export enum ECartSlice {

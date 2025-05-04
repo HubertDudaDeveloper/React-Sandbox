@@ -1,4 +1,4 @@
-import { EDummyJSON, IProduct } from "@/types/productTypes";
+import { EDummyJSON, IProduct } from "@/features/Products/types/productTypes";
 
 export const loadProducts = async (): Promise<Record<string, IProduct[]>> => {
 

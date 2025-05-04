@@ -1,5 +1,5 @@
-import { setIsLoading, setIsError } from "@/store/productSlice";
-import { loadProducts as loadProductsRepo } from "@/repositories/productsRepo";
+import { setIsLoading, setIsError } from "@/features/Products/store/productSlice";
+import { loadProducts as loadProductsRepo } from "@/features/Products/repositories/productsRepo";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const productsService = {

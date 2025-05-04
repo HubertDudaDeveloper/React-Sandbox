@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import ThemeContext from "@/context/ThemeContext";
-import { ETheme } from "@/types/themeTypes";
+import ThemeContext from "@/features/Theme/context/ThemeContext";
+import { ETheme } from "@/features/Theme/types/themeTypes";
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
   let initTheme: ETheme = ETheme.LIGHT;

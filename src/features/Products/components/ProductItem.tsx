@@ -1,4 +1,4 @@
-import { IProduct } from "@/types/productTypes";
+import { IProduct } from "@/features/Products/types/productTypes";
 
 type ProductItemProps = {
   product: IProduct,
