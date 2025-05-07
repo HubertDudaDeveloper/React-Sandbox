@@ -1,6 +1,7 @@
 import '@/styles/App.scss';
 import Cart from '@/features/Cart/Cart';
 import ProductList from '@/features/Products/ProductList';
+import Checkout from '@/features/Checkout/Checkout';
 import { useTheme } from '@/features/Theme/hooks/ThemeHook';
 import { ReactNode, useMemo, useState } from 'react';
 import { EProductSlice } from '@/features/Products/store/productSlice';
@@ -20,7 +21,7 @@ const App = () => {
       case ECartSlice.NAME:
         return <Cart onGoToCheckout={handleGoToCheckout} />;
       case ECheckoutSlice.NAME:
-        return <></>
+        return <Checkout/>
       default:
         return <ProductList/>;
     }
