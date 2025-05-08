@@ -21,13 +21,25 @@ export interface ICheckoutForm {
 interface ICheckoutState {
   isLoading: boolean,
   isError: boolean,
-  form: ICheckoutForm | null,
+  form: ICheckoutForm,
 }
 
 const initialState: ICheckoutState = {
   isLoading: false,
   isError: false,
-  form: null,
+  form: {
+    name: '',
+    lastname: '',
+    address: {
+      street: '',
+      number: '',
+      apartament: '',
+      city: '',
+      postal: ''
+    },
+    phone: '',
+    email: ''
+  },
 }
 
 const checkoutSlice = createSlice({
@@ -45,5 +57,5 @@ const checkoutSlice = createSlice({
     }
   },
 });
-
+export const { setIsLoading, setIsError, setCheckoutForm } = checkoutSlice.actions;
 export default checkoutSlice.reducer;
