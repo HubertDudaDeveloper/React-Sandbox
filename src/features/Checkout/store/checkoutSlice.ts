@@ -24,6 +24,17 @@ interface ICheckoutState {
   form: ICheckoutForm,
 }
 
+enum ERequiredKeys {
+  NAME = 'name',
+  LASTNAME = 'lastname',
+  STREET = 'street',
+  NUMBER = 'number',
+  CITY = 'city',
+  POSTAL = 'postal',
+  EMAIL = 'email',
+  PHONE = 'phone'
+}
+
 const initialState: ICheckoutState = {
   isLoading: false,
   isError: false,
@@ -53,6 +64,19 @@ const checkoutSlice = createSlice({
       state.isError = action.payload;
     },
     setCheckoutForm(state: ICheckoutState, action: PayloadAction<ICheckoutForm>): void {
+      const formCopy = { ...action.payload };
+      
+      const personalDataEmpty = Object.values(formCopy).includes('');
+      const addressDataEmpty = Object.values(formCopy.address).includes('')
+
+      if (personalDataEmpty || addressDataEmpty) {
+        state.isError = true;
+        console.log(Object.values(formCopy), Object.values(formCopy.address))
+        return;
+      }
+
+      state.isError = false;
+
       state.form = action.payload;
     }
   },
